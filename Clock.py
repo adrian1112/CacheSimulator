@@ -64,5 +64,5 @@ def Clock(pages,n):
 
 
 
-sc_p_f = Clock(pages,600000)
+sc_p_f = Clock(pages,int(tam_cache))
 print'Algortmo de reemplazo  Second Chance, Page Faults: ' + str(sc_p_f) 
