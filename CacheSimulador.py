@@ -4,7 +4,7 @@
 import time
 import sys
 import hashlib
-import md5
+import collections
 from collections import OrderedDict
 import datetime
 
