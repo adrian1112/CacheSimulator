@@ -15,6 +15,9 @@ Ejemplo  para LRU:
 
 Ejemplo para SLRU:
 			python Cache.py workload.txt LRU 600000 200000
+			
+Ejemplo para CLOCK:
+			python Cache.py workload.txt Clock 600000
 
 El codigo estará disponible en el repositorio de github:
 
