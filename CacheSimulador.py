@@ -91,14 +91,6 @@ def Optimal(pages,N):
 					continue
 	return p_f
 
-class Tiempo:
-    def __enter__(self):
-        self.start = time.clock()
-        return self
-
-    def __exit__(self, *args):
-        self.end = time.clock()
-        self.interval = self.end - self.start
 
 def Clock(pages,n):
 	#pages = pages.split('\n')
@@ -203,34 +195,36 @@ if __name__ == "__main__":
 		porce = 37
 		print 'Resultados:' 
 		print 'Miss rate:\t%0.2f%c (%d misses out of %d references)' % (valor,porce,p_fs,cantidad)
-		print 'Miss rate (warm cache):\t%0.2f%c (%d misses out of %d references)' % (valorHit,porce,p_fs-int(tam_cache),cantidad)
+		#print 'Miss rate (warm cache):\t%0.2f%c (%d misses out of %d references)' % (valorHit,porce,p_fs-int(tam_cache),cantidad)
 	
 	if algoritmo == "LRU":
 		entrada = tam_cache
 		fallos = 0
 		cantidad = 0
 		contenido = list()
-		archivo = open(input_fil,"r")
-		print 'Evaluando una cache LRU con %d entradas.' % int(entrada) 
-		lru = LRUCache(int(entrada),fallos,warmCache)
-		with Tiempo() as t:
-			linea=archivo.readline()
-			sentencia=linea.rstrip("\n")
+		archivo = open(input_file,"r")
+		print 'Evaluando una cache LRU con %d entradas.' % int(entrada)		 
+		lru = LRUCache(int(entrada),fallos)
+		linea=archivo.readline()
+		sentencia=linea.rstrip("\n")
+		lru.establecer(sentencia,0)
+		cantidad +=1
+		to = datetime.datetime.now()
+  		while linea != "":
+  			linea=archivo.readline()
+  			sentencia=linea.rstrip("\n")
 			lru.establecer(sentencia,0)
-			cantidad +=1
-    		while linea != "":
-        		linea=archivo.readline()
-        		sentencia=linea.rstrip("\n")
-        		lru.establecer(sentencia,0)
-        		cantidad +=1	
-		print('LRU tomo %.03f sec' % t.interval)
+			cantidad +=1	
+		tf = datetime.datetime.now()
+		t = tf-to
+		print str(t)
 		base = lru.fallos
 		valor = float((float(base)/float(cantidad))*100)
 		valorHit = float(float(base-(len(lru.cache)))/float(cantidad)*100)
 		porce = 37
 		print 'Resultados:' 
 		print 'Miss rate:\t%0.2f%c (%d misses out of %d references)' % (valor,porce,lru.fallos,cantidad)
-		print 'Miss rate (warm cache):\t%0.2f%c (%d misses out of %d references)' % (valorHit,porce,cantidad-lru.fallos-len(lru.cache),cantidad) 
+		#print 'Miss rate (warm cache):\t%0.2f%c (%d misses out of %d references)' % (valorHit,porce,cantidad-lru.fallos-len(lru.cache),cantidad) 
 	if algoritmo == "Clock":
 		to = datetime.datetime.now()
 		sc_p_f, hits, cantidad = Clock(pages,int(tam_cache))
@@ -260,7 +254,7 @@ if __name__ == "__main__":
 		porce=37
 		print 'Resultados:'
 		print 'Miss rate:\t%0.2f%c (%d misses out of %d references)' % (valor,porce,misses,cantidad)
-		print 'Miss rate (warm cache):\t%0.2f%c (%d misses out of %d references)' % (valorHit,porce,misses-int(tam_cache),cantidad)
+		#print 'Miss rate (warm cache):\t%0.2f%c (%d misses out of %d references)' % (valorHit,porce,misses-int(tam_cache),cantidad)
 
 
 
