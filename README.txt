@@ -18,6 +18,9 @@ Ejemplo para SLRU:
 			
 Ejemplo para CLOCK:
 			python Cache.py workload.txt Clock 600000
+			
+Ejemplo para Optimo:
+			python Cache.py workload.txt Optimo 600000
 
 El codigo estará disponible en el repositorio de github:
 
