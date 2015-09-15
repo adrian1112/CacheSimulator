@@ -51,44 +51,46 @@ def Comparar(pag_en_Cache,pages):
 		return len(pages)
 
 def Optimal(pages,N):
-	diccionario = {} 
-	#pages = pages.split("\n") 
-	#pages = pages.split() 
 	tamCache = N   
-	cache = {}
+	cache = OrderedDict() 
 	p_f = 0 
 	k=0
 	print("Evaluando una caché "+algoritmo+" con "+ tam_cache+" entradas. "+"\n")
 	for i in range(len(pages)):
 		page = pages[i]	
-		#print cache.get(page)
-		#print page
-		#print len(cache)
-		#print cache
 		if len(cache) < tamCache: 
 			if not (cache.has_key(page)):    
 				cache[page]=k
-				p_f += 1 # Page Fault.
+				p_f += 1 
 				k += 1
-			
 		else:
 			if not (cache.has_key(page)): 
 				indice = 0 
 				ind=0
+				pal=''
+				
 				for p, j  in cache.items():
-					mayor = Comparar(p,pages[i:]) 
-					if (mayor > indice):
+					try:
+						to=datetime.datetime.now()
+						mayor = pages[i:].index(p) 
+						tf = datetime.datetime.now()
+						t = tf - to
+						print t
+					except:
+						mayor = len(pages[i:])
+						ind=j
+						pal=p
+						break
+					if (mayor > indice ):
 						indice = mayor
 						ind=j
-					else:
-						continue
-					diccionario[indice] = p 
-				paginaRemover = diccionario.get(indice) 
-				try:
-					cache[ind]=page            
+						pal=p
+				try:	
+					del cache[p]
+					cache[page]=ind
 					p_f += 1 
 				except:
-					continue
+					pass
 	return p_f
 
 
